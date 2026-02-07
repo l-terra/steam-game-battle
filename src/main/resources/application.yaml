@@ -12,3 +12,7 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
     show-sql: true
+steam:
+  api-url: ${STEAM_API_URL}
+  api-key: ${STEAM_API_KEY}
+  steamid: ${MY_STEAM_ID}
