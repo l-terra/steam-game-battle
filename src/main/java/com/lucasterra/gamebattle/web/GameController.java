@@ -3,17 +3,14 @@ package com.lucasterra.gamebattle.web;
 import com.lucasterra.gamebattle.domain.Game;
 import com.lucasterra.gamebattle.service.GameService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/games")
 @RequiredArgsConstructor
-// @CrossOrigin(origins = "*")
+@CrossOrigin(origins = "*")
 public class GameController {
 
     private final GameService gameService;

@@ -1,0 +1,73 @@
+body {
+  background-color: #1b2838;
+  color: white;
+  font-family: sans-serif;
+  margin: 0;
+  padding: 20px;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+header {
+  margin-bottom: 40px;
+}
+
+button {
+  background-color: #66c0f4;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+button:hover {
+  background-color: #419dc5;
+}
+
+/* Grid para os cards ficarem lado a lado */
+.lista-jogos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+/* O cartão de cada jogo */
+.card-jogo {
+  background-color: #171a21;
+  border: 1px solid #2a475e;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.2s;
+}
+
+.card-jogo:hover {
+  transform: scale(1.05); /* Efeito de zoom ao passar o mouse */
+  border-color: #66c0f4;
+}
+
+.card-jogo img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.card-jogo .info {
+  padding: 10px;
+}
+
+.card-jogo h3 {
+  font-size: 14px;
+  margin: 0 0 5px 0;
+  color: #c7d5e0;
+}
+
+.card-jogo span {
+  font-size: 12px;
+  color: #66c0f4;
+}

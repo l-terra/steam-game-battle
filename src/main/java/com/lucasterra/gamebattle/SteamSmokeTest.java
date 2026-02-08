@@ -71,11 +71,15 @@ public class SteamSmokeTest implements CommandLineRunner {
             int novosJogos = 0;
             for (var gameDto : response.getGames()) {
                 Game game = gameRepository.findByAppId(gameDto.appId())
+                        .map(existingGame -> {
+                            existingGame.setImageUrl("https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/" + gameDto.appId() + "/header.jpg");
+                            return gameRepository.save(existingGame);
+                        })
                         .orElseGet(() -> {
                             return gameRepository.save(Game.builder()
                                     .appId(gameDto.appId())
                                     .name(gameDto.name())
-                                    .imageUrl("http://media.steampowered.com/steamcommunity/public/images/apps/" + gameDto.appId() + "/Header.jpg")
+                                    .imageUrl("https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/" + gameDto.appId() + "/header.jpg")
                                     .build());
                         });
 
