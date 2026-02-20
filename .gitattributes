@@ -4,3 +4,13 @@
 gamebattle-frontend/src/components/ui/** linguist-vendored
 gamebattle-frontend/package-lock.json linguist-generated
 gamebattle-frontend/bun.lockb linguist-generated
+
+# Ignora arquivos de configuração na raiz do frontend
+gamebattle-frontend/*.config.ts linguist-generated
+gamebattle-frontend/src/vite-env.d.ts linguist-generated
+
+# Ignora pastas de utilitários, hooks e testes gerados por IA/Ferramentas
+gamebattle-frontend/src/lib/** linguist-generated
+gamebattle-frontend/src/hooks/** linguist-generated
+gamebattle-frontend/src/test/** linguist-generated
+gamebattle-frontend/src/data/** linguist-generated
