@@ -1,2 +1,6 @@
 /mvnw text eol=lf
 *.cmd text eol=crlf
+
+gamebattle-frontend/src/components/ui/** linguist-vendored
+gamebattle-frontend/package-lock.json linguist-generated
+gamebattle-frontend/bun.lockb linguist-generated
