@@ -1,66 +1,128 @@
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Orbitron:wght@700;800;900&display=swap');
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
-body {
-  margin: 0;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
+@layer base {
   :root {
-    color: #213547;
-    background-color: #ffffff;
+    --background: 220 26% 14%;
+    --foreground: 210 40% 92%;
+
+    --card: 216 28% 17%;
+    --card-foreground: 210 40% 92%;
+
+    --popover: 216 28% 17%;
+    --popover-foreground: 210 40% 92%;
+
+    --primary: 201 87% 67%;
+    --primary-foreground: 220 26% 10%;
+
+    --secondary: 210 25% 20%;
+    --secondary-foreground: 210 40% 85%;
+
+    --muted: 215 20% 22%;
+    --muted-foreground: 215 15% 55%;
+
+    --accent: 210 30% 25%;
+    --accent-foreground: 201 87% 67%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 207 44% 26%;
+    --input: 207 44% 26%;
+    --ring: 201 87% 67%;
+
+    --radius: 0.5rem;
+
+    --champion-gold: 48 100% 50%;
+    --steam-dark: 225 18% 11%;
+    --steam-navy: 220 26% 16%;
+    --steam-blue: 201 87% 67%;
+    --steam-border: 207 44% 26%;
+    --glow-blue: 201 87% 67%;
+    --glow-gold: 48 100% 50%;
+
+    --sidebar-background: 220 26% 14%;
+    --sidebar-foreground: 210 40% 92%;
+    --sidebar-primary: 201 87% 67%;
+    --sidebar-primary-foreground: 220 26% 10%;
+    --sidebar-accent: 210 30% 25%;
+    --sidebar-accent-foreground: 201 87% 67%;
+    --sidebar-border: 207 44% 26%;
+    --sidebar-ring: 201 87% 67%;
+
+    --font-display: 'Orbitron', sans-serif;
+    --font-body: 'Inter', sans-serif;
   }
-  a:hover {
-    color: #747bff;
+}
+
+@layer base {
+  * {
+    @apply border-border;
   }
-  button {
-    background-color: #f9f9f9;
+
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+    font-family: var(--font-body);
+  }
+
+  h1, h2, h3 {
+    font-family: var(--font-display);
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family: var(--font-display);
+  }
+
+  .font-body {
+    font-family: var(--font-body);
+  }
+
+  .glow-blue {
+    box-shadow: 0 0 20px hsl(var(--glow-blue) / 0.4), 0 0 60px hsl(var(--glow-blue) / 0.15);
+  }
+
+  .glow-blue-strong {
+    box-shadow: 0 0 30px hsl(var(--glow-blue) / 0.6), 0 0 80px hsl(var(--glow-blue) / 0.25);
+  }
+
+  .glow-gold {
+    box-shadow: 0 0 30px hsl(var(--glow-gold) / 0.5), 0 0 80px hsl(var(--glow-gold) / 0.2), 0 0 120px hsl(var(--glow-gold) / 0.1);
+  }
+
+  .glass {
+    background: hsl(var(--card) / 0.6);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid hsl(var(--border) / 0.5);
+  }
+
+  .glass-strong {
+    background: hsl(var(--card) / 0.8);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid hsl(var(--border) / 0.6);
+  }
+
+  .text-gradient-blue {
+    background: linear-gradient(135deg, hsl(var(--steam-blue)), hsl(201 90% 78%));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-gradient-gold {
+    background: linear-gradient(135deg, hsl(var(--glow-gold)), hsl(40 100% 65%));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .bg-steam-gradient {
+    background: linear-gradient(180deg, hsl(var(--steam-dark)) 0%, hsl(var(--steam-navy)) 100%);
   }
 }

@@ -26,4 +26,11 @@ public class GameController {
     public List<Game> getMost(@RequestParam String steamId) {
         return gameService.getMostPlayedGames(steamId);
     }
+
+    // Endpoint para disparar a sincronização
+    // URL: POST http://localhost:8080/api/games/sync?steamId=...
+    @PostMapping("/sync")
+    public void syncLibrary(@RequestParam String steamId) {
+        gameService.syncSteamLibrary(steamId);
+    }
 }
