@@ -1,73 +1,164 @@
+/* Garante que o fundo ocupe a tela toda no estilo Steam */
 body {
   background-color: #1b2838;
-  color: white;
-  font-family: sans-serif;
+  color: #e5e5e5;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
-  padding: 20px;
+  padding: 0;
+  min-height: 100vh;
 }
 
+/* O segredo para centralizar: Flexbox no Container! */
 .container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Força todos os elementos filhos para o centro horizontal */
   max-width: 1200px;
   margin: 0 auto;
-  text-align: center;
+  padding: 50px 20px;
+  text-align: center; /* Centraliza os textos dentro das tags */
 }
 
+/* Cabeçalho */
 header {
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 }
 
+h1 {
+  font-size: 3rem;
+  margin-bottom: 10px;
+  color: #ffffff;
+}
+
+h2 {
+  font-size: 2rem;
+  margin-bottom: 5px;
+}
+
+/* Botões Estilo Steam */
 button {
-  background-color: #66c0f4;
+  background: linear-gradient(to right, #47bfff 5%, #1a44c2 60%);
+  background-position: 25%;
+  background-size: 200% auto;
+  color: white;
   border: none;
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
+  padding: 12px 30px;
+  font-size: 18px;
   border-radius: 4px;
+  cursor: pointer;
   font-weight: bold;
+  transition: background-position 0.5s ease;
+  margin-top: 20px;
 }
 
 button:hover {
-  background-color: #419dc5;
+  background-position: 100%;
 }
 
-/* Grid para os cards ficarem lado a lado */
-.lista-jogos {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 20px;
+button:disabled {
+  background: #454545;
+  cursor: not-allowed;
+  color: #888;
 }
 
-/* O cartão de cada jogo */
-.card-jogo {
+/* --- ARENA DE BATALHA --- */
+.arena {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+  margin-top: 30px;
+  width: 100%;
+}
+
+/* O "VS" do meio */
+.versus {
+  font-size: 50px;
+  font-weight: 900;
+  color: #66c0f4;
+  text-shadow: 0px 4px 10px rgba(0, 0, 0, 0.6);
+  font-style: italic;
+}
+
+/* Cartões dos Jogos (Lutadores) */
+.lutador {
+  cursor: pointer;
+  width: 350px;
   background-color: #171a21;
-  border: 1px solid #2a475e;
-  border-radius: 8px;
+  border: 2px solid #2a475e;
+  border-radius: 12px;
   overflow: hidden;
-  transition: transform 0.2s;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
 }
 
-.card-jogo:hover {
-  transform: scale(1.05); /* Efeito de zoom ao passar o mouse */
+.lutador:hover {
+  transform: scale(1.05) translateY(-10px); /* Dá um pulinho pra cima */
   border-color: #66c0f4;
+  box-shadow: 0 15px 25px rgba(102, 192, 244, 0.4); /* Brilho azul */
 }
 
-.card-jogo img {
+.lutador img {
+  width: 100%;
+  height: 165px;
+  object-fit: cover;
+  border-bottom: 2px solid #2a475e;
+  display: block; /* Tira aquele espaço fantasma embaixo da imagem */
+}
+
+.lutador h3 {
+  padding: 15px 10px;
+  margin: 0;
+  font-size: 1.1rem;
+  color: #c7d5e0;
+}
+
+/* Textos secundários */
+.status-torneio {
+  color: #8f98a0;
+  font-size: 1.1rem;
+  margin-bottom: 30px;
+}
+
+/* --- TELA DO CAMPEÃO --- */
+.campeao-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: zoomIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.campeao-card {
+  width: 450px;
+  background-color: #171a21;
+  border: 3px solid #ffcc00; /* Borda dourada */
+  border-radius: 12px;
+  box-shadow: 0 0 40px rgba(255, 204, 0, 0.6); /* Brilho dourado */
+  overflow: hidden;
+  margin: 20px 0;
+}
+
+.campeao-card img {
   width: 100%;
   height: auto;
   display: block;
 }
 
-.card-jogo .info {
-  padding: 10px;
+.campeao-card h3 {
+  padding: 20px;
+  margin: 0;
+  font-size: 1.5rem;
+  color: #ffcc00;
 }
 
-.card-jogo h3 {
-  font-size: 14px;
-  margin: 0 0 5px 0;
-  color: #c7d5e0;
-}
-
-.card-jogo span {
-  font-size: 12px;
-  color: #66c0f4;
+/* Animação do vencedor aparecendo */
+@keyframes zoomIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
