@@ -14,3 +14,15 @@ gamebattle-frontend/src/lib/** linguist-generated
 gamebattle-frontend/src/hooks/** linguist-generated
 gamebattle-frontend/src/test/** linguist-generated
 gamebattle-frontend/src/data/** linguist-generated
+
+# Forçando a barra nos arquivos restantes de configuração e boilerplate
+gamebattle-frontend/vite.config.ts linguist-generated
+gamebattle-frontend/tailwind.config.ts linguist-generated
+gamebattle-frontend/vitest.config.ts linguist-generated
+gamebattle-frontend/src/vite-env.d.ts linguist-generated
+gamebattle-frontend/src/lib/utils.ts linguist-generated
+gamebattle-frontend/src/data/mockGames.ts linguist-generated
+gamebattle-frontend/src/hooks/use-toast.ts linguist-generated
+gamebattle-frontend/src/components/ui/use-toast.ts linguist-vendored
+gamebattle-frontend/src/test/setup.ts linguist-generated
+gamebattle-frontend/src/test/example.test.ts linguist-generated
