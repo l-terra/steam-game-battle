@@ -110,7 +110,8 @@ const BattleArena = ({ games, onChampion, onBack }: BattleArenaProps) => {
 
           {/* VS */}
           <div className="flex shrink-0 items-center justify-center">
-            <span className="font-display text-4xl font-black italic text-primary drop-shadow-[0_0_20px_hsl(201,87%,67%,0.5)] sm:text-5xl">
+            {/* Adicionamos o -translate-x-[10px] no final do className abaixo */}
+            <span className="font-display text-4xl font-black italic text-primary drop-shadow-[0_0_20px_hsl(201,87%,67%,0.5)] sm:text-5xl -translate-x-[10px]">
               VS
             </span>
           </div>
