@@ -2,7 +2,7 @@ package com.lucasterra.gamebattle.integration.steam.response;
 
 import java.util.List;
 
-public record GetPlayerSummariesResponse() {
+public record GetPlayerSummariesResponse(ResponsePayload response) {
 
     public record ResponsePayload(List<PlayerDto> players) {}
 

@@ -15,6 +15,8 @@ const Index = () => {
   const [steamId, setSteamId] = useState<string | null>(null);
   const [champion, setChampion] = useState<Game | null>(null);
   const [battleGames, setBattleGames] = useState<Game[]>([]);
+  const [username, setUsername] = useState<string>("");
+  const [avatarUrl, setAvatarUrl] = useState<string>("");
 
   // 1. Verifica se a URL tem o steamId (vindo do redirecionamento do Java)
   useEffect(() => {
@@ -30,12 +32,17 @@ const Index = () => {
     }
   }, []);
 
-  // 2. Chama a API do Java
   const sincronizarBiblioteca = async (id: string) => {
     setState("loading");
     try {
       await axios.post(`http://localhost:8080/api/games/sync?steamId=${id}`);
-      setState("mode-select"); // Terminou? Vai pra seleção de modos!
+
+      // --- NOVO: BUSCA O USUÁRIO SALVO ---
+      const userResp = await axios.get(`http://localhost:8080/api/users?steamId=${id}`);
+      setUsername(userResp.data.username);
+      setAvatarUrl(userResp.data.avatarUrl);
+
+      setState("mode-select");
     } catch (error) {
       console.error("Erro ao sincronizar:", error);
       alert("Erro ao conectar com o backend Java.");
@@ -93,7 +100,12 @@ const Index = () => {
 
   return (
       <div className="min-h-screen bg-steam-gradient">
-        <Header isLoggedIn={isLoggedIn} onLogout={handleLogout} />
+        <Header
+            isLoggedIn={isLoggedIn}
+            onLogout={handleLogout}
+            username={username}
+            avatarUrl={avatarUrl}
+        />
 
         {state === "login" && <LoginScreen onLogin={handleLogin} />}
         {state === "loading" && <LoadingScreen />}

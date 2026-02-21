@@ -68,11 +68,38 @@ public class GameService {
             return;
         }
 
+        var summaryResponse = steamRestClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path("/ISteamUser/GetPlayerSummaries/v0002/")
+                        .queryParam("key", apiKey)
+                        .queryParam("steamids", steamId)
+                        .build())
+                .retrieve()
+                .body(com.lucasterra.gamebattle.integration.steam.response.GetPlayerSummariesResponse.class);
+
+        String username = "Jogador_" + steamId.substring(Math.max(0, steamId.length() - 4));
+        String avatarUrl = "";
+
+        if (summaryResponse != null && summaryResponse.response() != null && !summaryResponse.response().players().isEmpty()) {
+            var player = summaryResponse.response().players().get(0);
+            username = player.personaname();
+            avatarUrl = player.avatarfull();
+        }
+
+        // 2. Garante que o Usuário existe E ATUALIZA com a foto/nome reais
+        final String finalUsername = username;
+        final String finalAvatarUrl = avatarUrl;
+
         User user = userRepository.findBySteamId(steamId)
+                .map(existingUser -> {
+                    existingUser.setUsername(finalUsername);
+                    existingUser.setAvatarUrl(finalAvatarUrl);
+                    return userRepository.save(existingUser);
+                })
                 .orElseGet(() -> userRepository.save(User.builder()
                         .steamId(steamId)
-                        .username("Jogador_" + steamId.substring(steamId.length() - 4)) // Nome genérico temporário
-                        .avatarUrl("")
+                        .username(finalUsername)
+                        .avatarUrl(finalAvatarUrl)
                         .build()));
 
         for (var gameDto : response.getGames()) {
