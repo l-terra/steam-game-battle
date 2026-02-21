@@ -144,6 +144,10 @@ function GameCard({ game, onPick }: { game: Game; onPick: () => void }) {
           alt={game.name}
           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
           loading="lazy"
+          onError={(e) => {
+            // Substitui a imagem quebrada por um placeholder com as cores da Steam
+            e.currentTarget.src = `https://placehold.co/460x215/171a21/66c0f4?text=${encodeURIComponent(game.name)}`;
+          }}
         />
       </div>
       <div className="p-4">
