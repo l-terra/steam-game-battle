@@ -1,9 +1,11 @@
 import { motion } from "framer-motion";
 
 const SteamIcon = () => (
-  <svg viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5">
-    <path d="M12 2C6.48 2 2 6.03 2 11.05c0 3.2 1.87 6.04 4.73 7.57l2.94-1.18a2.48 2.48 0 0 1 1.83.04l2.17.87a1.87 1.87 0 0 0 2.58-1.1l.04-.13a1.87 1.87 0 0 0-1.1-2.25l-2.42-.97a2.49 2.49 0 0 1-1.5-2.88 2.49 2.49 0 0 1 2.44-1.87h.24a2.49 2.49 0 0 1 2.42 1.92c.14.53.08 1.09-.16 1.58l-.08.16a1.87 1.87 0 0 0 .77 2.39l.13.07A6.97 6.97 0 0 0 19 11.05C19 6.03 15.52 2 12 2z"/>
-  </svg>
+    <img
+        src="https://upload.wikimedia.org/wikipedia/commons/8/83/Steam_icon_logo.svg"
+        alt="Steam Logo"
+        className="h-6 w-6"
+    />
 );
 
 interface LoginScreenProps {
