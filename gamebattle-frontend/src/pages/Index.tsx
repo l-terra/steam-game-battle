@@ -7,8 +7,9 @@ import ModeSelection from "@/components/ModeSelection";
 import BattleArena from "@/components/BattleArena";
 import ChampionScreen from "@/components/ChampionScreen";
 import { Game } from "@/data/mockGames";
+import HallOfFame from "@/components/HallOfFame";
 
-type AppState = "login" | "loading" | "mode-select" | "battle" | "champion";
+type AppState = "login" | "loading" | "mode-select" | "battle" | "champion" | "hall-of-fame";
 
 const Index = () => {
   const [state, setState] = useState<AppState>("login");
@@ -88,10 +89,14 @@ const Index = () => {
     }
   };
 
-  const handleChampion = useCallback((game: Game) => {
+  const handleChampion = (game: Game) => {
     setChampion(game);
     setState("champion");
-  }, []);
+    if (steamId) {
+      axios.post(`http://localhost:8080/api/hall-of-fame?steamId=${steamId}&gameId=${game.id}`)
+          .catch(err => console.error("Erro ao salvar campeão:", err));
+    }
+  };
 
   const handlePlayAgain = useCallback(() => {
     setState("mode-select");
@@ -110,7 +115,10 @@ const Index = () => {
         {state === "login" && <LoginScreen onLogin={handleLogin} />}
         {state === "loading" && <LoadingScreen />}
         {state === "mode-select" && (
-            <ModeSelection onSelectMode={handleSelectMode} />
+            <ModeSelection
+                onSelectMode={handleSelectMode}
+                onHallOfFame={() => setState("hall-of-fame")}
+            />
         )}
         {state === "battle" && (
             <BattleArena
@@ -121,6 +129,9 @@ const Index = () => {
         )}
         {state === "champion" && champion && (
             <ChampionScreen champion={champion} onPlayAgain={handlePlayAgain} />
+        )}
+        {state === "hall-of-fame" && (
+            <HallOfFame onBack={() => setState("mode-select")} />
         )}
       </div>
   );
