@@ -9,7 +9,7 @@ services:
     volumes:
       - steam_db_data:/var/lib/postgresql/data
     ports:
-      - "5432:5432"
+      - "127.0.0.1:5432:5432"
     networks:
       - app-network
     restart: always
@@ -21,7 +21,7 @@ services:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL}
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD}
     ports:
-      - "16543:80"
+      - "127.0.0.1:16543:80"
     networks:
       - app-network
     depends_on:

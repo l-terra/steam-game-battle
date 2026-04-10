@@ -9,6 +9,7 @@ import com.lucasterra.gamebattle.repositories.UserLibraryRepository;
 import com.lucasterra.gamebattle.repositories.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,6 +18,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class GameService {
@@ -50,7 +52,7 @@ public class GameService {
 
     @Transactional
     public void syncSteamLibrary(String steamId) {
-        System.out.println("Sincronizando biblioteca do Steam para o usuário: " + steamId);
+        log.info("Sincronizando biblioteca do Steam para o usuário: {}", steamId);
 
         var response = steamRestClient.get()
                 .uri(uriBuilder -> uriBuilder
@@ -64,7 +66,7 @@ public class GameService {
                 .body(GetOwnedGamesResponse.class);
 
         if (response == null || response.getGames().isEmpty()) {
-            System.out.println("Nenhum jogo encontrado para o usuário Steam ID: " + steamId + " (Perfil Privado?)");
+            log.warn("Nenhum jogo encontrado para o usuário Steam ID: {} (Perfil Privado?)", steamId);
             return;
         }
 
@@ -130,7 +132,7 @@ public class GameService {
                         .build());
             }
         }
-        System.out.println("Sincronização concluída com sucesso!");
+        log.info("Sincronização concluída com sucesso!");
     }
 
     public List<Game> getLowPlaytimeGames(String steamId) {

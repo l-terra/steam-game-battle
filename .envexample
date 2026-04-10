@@ -6,3 +6,7 @@ PGADMIN_PASSWORD=
 STEAM_API_KEY=
 STEAM_API_URL=http://api.steampowered.com/
 MY_STEAM_ID=
+APP_USER=
+APP_PASSWORD=
+APP_FRONTEND_URL=http://localhost:5173
+APP_BACKEND_URL=http://localhost:8080

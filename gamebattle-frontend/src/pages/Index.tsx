@@ -9,6 +9,9 @@ import ChampionScreen from "@/components/ChampionScreen";
 import { Game } from "@/data/mockGames";
 import HallOfFame from "@/components/HallOfFame";
 
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8080";
+const STEAM_ID_REGEX = /^\d{1,20}$/;
+
 type AppState = "login" | "loading" | "mode-select" | "battle" | "champion" | "hall-of-fame";
 
 const Index = () => {
@@ -19,16 +22,13 @@ const Index = () => {
   const [username, setUsername] = useState<string>("");
   const [avatarUrl, setAvatarUrl] = useState<string>("");
 
-  // 1. Verifica se a URL tem o steamId (vindo do redirecionamento do Java)
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const id = params.get("steamId");
 
-    if (id) {
+    if (id && STEAM_ID_REGEX.test(id)) {
       setSteamId(id);
-      // Limpa a URL para ficar limpinha (sem o ?steamId=123)
       window.history.replaceState({}, document.title, "/");
-      // Manda o Java baixar/atualizar seus jogos
       sincronizarBiblioteca(id);
     }
   }, []);
@@ -36,17 +36,16 @@ const Index = () => {
   const sincronizarBiblioteca = async (id: string) => {
     setState("loading");
     try {
-      await axios.post(`http://localhost:8080/api/games/sync?steamId=${id}`);
+      await axios.post(`${API_URL}/api/games/sync?steamId=${id}`);
 
-      // --- NOVO: BUSCA O USUÁRIO SALVO ---
-      const userResp = await axios.get(`http://localhost:8080/api/users?steamId=${id}`);
+      const userResp = await axios.get(`${API_URL}/api/users?steamId=${id}`);
       setUsername(userResp.data.username);
       setAvatarUrl(userResp.data.avatarUrl);
 
       setState("mode-select");
     } catch (error) {
       console.error("Erro ao sincronizar:", error);
-      alert("Erro ao conectar com o backend Java.");
+      alert("Erro ao conectar com o servidor.");
       setState("login");
     }
   };
@@ -55,7 +54,7 @@ const Index = () => {
 
   // 3. Botão de Login manda pro AuthController do Java
   const handleLogin = useCallback(() => {
-    window.location.href = "http://localhost:8080/api/auth/steam";
+    window.location.href = `${API_URL}/api/auth/steam`;
   }, []);
 
   const handleLogout = useCallback(() => {
@@ -71,7 +70,7 @@ const Index = () => {
     setState("loading");
     try {
       const endpoint = mode === "backlog" ? "least" : "most";
-      const resposta = await axios.get(`http://localhost:8080/api/games/${endpoint}?steamId=${steamId}`);
+      const resposta = await axios.get(`${API_URL}/api/games/${endpoint}?steamId=${steamId}`);
 
       if (resposta.data.length < 2) {
         alert("Você precisa de pelo menos 2 jogos nessa categoria para batalhar!");
@@ -84,7 +83,7 @@ const Index = () => {
       setState("battle");
     } catch (erro) {
       console.error("Erro ao buscar jogos", erro);
-      alert("Erro ao buscar os jogos para o torneio. O Java está rodando?");
+      alert("Erro ao buscar os jogos para o torneio.");
       setState("mode-select");
     }
   };
@@ -93,7 +92,7 @@ const Index = () => {
     setChampion(game);
     setState("champion");
     if (steamId) {
-      axios.post(`http://localhost:8080/api/hall-of-fame?steamId=${steamId}&gameId=${game.id}`)
+      axios.post(`${API_URL}/api/hall-of-fame?steamId=${steamId}&gameId=${game.id}`)
           .catch(err => console.error("Erro ao salvar campeão:", err));
     }
   };

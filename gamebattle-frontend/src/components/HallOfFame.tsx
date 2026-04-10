@@ -14,7 +14,8 @@ const HallOfFame = ({ onBack }: HallOfFameProps) => {
 
     useEffect(() => {
         // Atualize o final desta URL para bater com o seu Controller
-        axios.get("http://localhost:8080/api/hall-of-fame/top-champions")
+        const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8080";
+        axios.get(`${API_URL}/api/hall-of-fame/top-champions`)
             .then((res) => setGames(res.data))
             .catch((err) => console.error("Erro ao carregar Hall of Fame:", err))
             .finally(() => setLoading(false));
